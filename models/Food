@@ -1,0 +1,26 @@
+// IMPORT THE MONGOOSE LIBRARY
+const mongoose = require('mongoose')
+
+// CREATE THE SCHEMA
+const foodSchema = new mongoose.Schema(
+    { //object
+        name: String,
+        cuisine: String,
+        ingredients: String,
+        price: Number,
+        isVegetarian: {
+            type: Boolean,
+            default: false,
+        }
+    }
+    , { //option
+        timestamps: true
+    }
+)
+
+// LINK THE SCHEMA TO A MODEL
+// FOR MODEL NAME = SINGLE AND CAPIALIZED
+const Food = mongoose.model('Food', foodSchema)
+
+// EXPORT THE MODEL
+module.exports = Food

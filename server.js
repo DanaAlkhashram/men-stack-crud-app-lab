@@ -1,17 +1,22 @@
 const dotenv = require('dotenv');
 dotenv.config();
+
 const express = require('express');
 const mongoose = require("mongoose"); // require package
+const path = require('path')
+
 const app = express();
 
-const businessesController = require('./controllers/businessController');
+// CONTROLLER FOR FOOD ROUTES
+const foodController = require('./controllers/foodController');
 
 // MIDDLEWARE
 app.use(express.urlencoded({ extended: false }));
 
-const path = require('path')
+// STATIC FILES FOR CSS/IMG
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Connect to MongoDB using the connection string in the .env file
+// MONODB CONECTION USING .ENV FILE
 mongoose.connect(process.env.MONGODB_URI);
 mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
@@ -22,15 +27,15 @@ app.get('/test',(req, res)=>{
   res.send('work');
 });
 
-// GET 
+// GET /HOMEPAGE
 app.get("/", async (req, res) => {
   res.render("index.ejs");
 });
 
-// ROUTES
-app.use("/businesses", businessesController);
+// USE FOOD ROUTES
+app.use("/foods", foodController);
 
-// LIVE 
+// LIVE ON PORT 3000
 app.listen(3000, () => {
   console.log('Listening on port 3000');
 });
