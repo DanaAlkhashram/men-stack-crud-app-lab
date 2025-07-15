@@ -2,20 +2,21 @@ const express = require('express');
 const router = express.Router();
 const Food = require('../models/Food');
 
-// ALL ROUTES IN THIS FILE HAS /Foods " / "
+// All routes in this file are prefixed with /foods (set in server.js)
 
-// TEST ROUTE
-router.get('/', (req, res) => {
-  res.send('do I work?')
+router.get('/', async (req, res) => {
+  const allFoods = await Food.find();
+  res.render('foods/index.ejs', { allFoods: allFoods })
 })
 
 // NEW - FORM TO CREATE NEW FOOD
-router.get("/new", (req, res) => {
-  res.render('foodsViews/new.ejs');
+router.get('/new', (req, res) => {
+  res.render('foods/new.ejs');
 });
 
-// POST /BUSINESS
+// POST form data to database 
 router.post('/', async (req, res) => {
+  console.log(req.body);
 
   if (req.body.isVegetarian === 'on') {
     req.body.isVegetarian = true;
@@ -31,5 +32,35 @@ router.post('/', async (req, res) => {
   res.redirect('/foods')
 
 });
+
+// SHOW ONE foods /:foodId
+router.get('/:foodId', async (req, res) => {
+  const foundFood = await Food.findById(req.params.foodId)
+  res.render('foods/show.ejs', { foundFood: foundFood })
+})
+
+// DELETE
+router.delete('/:foodId', async (req, res) => {
+  await Food.findByIdAndDelete(req.params.foodId)
+  res.redirect('/foods')
+})
+
+// GET /foods/:foodId/EDIT
+router.get('/:foodId/edit', async (req, res) => {
+  const foundFood = await Food.findById(req.params.foodId);
+  res.render('foods/edit.ejs', { foundFood: foundFood });
+})
+
+// PUT FOR SUBMITTING THE FORM
+router.put('/:foodId', async (req, res) => {
+  if (req.body.isVegetarian === 'on') {
+    req.body.isVegetarian = true;
+  } else {
+    req.body.isVegetarian = false;
+  } 
+  await Food.findByIdAndUpdate(req.params.foodId, req.body)
+  res.redirect(`/foods/${req.params.foodId}`)
+})
+
 
 module.exports = router;

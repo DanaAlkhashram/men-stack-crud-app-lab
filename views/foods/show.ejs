@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>
+        <%= foundFood.name %>
+    </title>
+</head>
+
+<body>
+
+    <h1>
+        <%= foundFood.name %>
+    </h1>
+
+    <% if (foundFood.isVegetarian) { %>
+        <p>🥦 Vegetarian</p>
+        <% } else { %>
+            <p>🍗 Non-Vegetarian</p>
+            <% } %>
+
+                <p><strong>Cuisine:</strong>
+                    <%= foundFood.cuisine %>
+                </p>
+
+                <p><strong>Ingredients:</strong></p>
+                <p>
+                    <%= foundFood.ingredients %>
+                </p>
+
+                <% if (foundFood.price) { %>
+                    <p><strong>Price:</strong>
+                        <%= foundFood.price %> BHD
+                    </p>
+                    <% } %>
+
+                        <div>
+                            <form action="/foods/<%= foundFood._id %>?_method=DELETE" method="POST">
+                                <button type="submit">Delete <%= foundFood.name %></button>
+                            </form>
+                            <a class="edit-link" href="/foods/<%= foundFood._id %>/edit">
+                                <div class="edit-text">Edit <%= foundFood.name %>
+                                </div>
+                            </a>
+                        </div>
+
+                        <a class="foods-index-link" href="/foods">
+                            <div class="index-link-text">Back to All Foods</div>
+                        </a>
+</body>
+
+</html>

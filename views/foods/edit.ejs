@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title> Edit <%= foundFood.name %>
+    </title>
+</head>
+
+<body>
+
+
+    <h1>Edit <%= foundFood.name %>
+    </h1>
+    <form action="/foods/<%= foundFood._id %>?_method=PUT" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" value="<%= foundFood.name %>" required />
+
+        <label for="cuisine">Cuisine:</label>
+        <input type="text" name="cuisine" id="cuisine" value="<%= foundFood.cuisine %>" required />
+
+        <label for="ingredients">Ingredients:</label>
+        <textarea name="ingredients" id="ingredients" rows="4" required><%= foundFood.ingredients %></textarea>
+
+        <label for="price">Price:</label>
+        <input type="number" name="price" id="price" value="<%= foundFood.price %>" step="0.01" min="0" />
+
+        <div class="checkbox-div">
+            <label for="isVegetarian">Is Vegetarian?</label>
+            <input type="checkbox" name="isVegetarian" id="isVegetarian" <% if (foundFood.isVegetarian) { %>checked<% }
+                %> />
+        </div>
+
+        <button type="submit">Edit Food</button>
+    </form>
+
+    <a class="foods-index-link" href="/foods">
+        <div class="index-link-text">Back to All foods</div>
+    </a>
+
+
+
+</body>
+
+</html>

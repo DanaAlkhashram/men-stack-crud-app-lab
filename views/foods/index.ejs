@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Foods Index</title>
+</head>
+
+<body>
+    
+ <div class="index-header-div">
+    <h1>All Foods</h1>
+    <a href="/foods/new" class="add-food">Create New Food</a>
+  </div>
+
+  <ul>
+    <% allFoods.forEach(food => { %>
+      <li>
+        <h2>
+          <a href="/foods/<%= food._id %>">
+            <%= food.name %>
+          </a>
+          <% if (food.isVegetarian) { %> 
+           🥦 Vegetarian 
+          <% } %>
+        </h2>
+
+        <% if (food.cuisine) { %>
+          <p><strong>Cuisine:</strong>
+             <%= food.cuisine %></p>
+        <% } %>
+
+        <% if (food.ingredients) { %>
+          <p><strong>Ingredients:</strong> <%= food.ingredients %></p>
+        <% } %>
+
+        <% if (food.price) { %>
+          <p><strong>Price:</strong> <%= food.price %> BHD</p>
+        <% } %>
+
+        <hr />
+      </li>
+    <% }) %>
+  </ul>
+
+</body>
+
+</html>

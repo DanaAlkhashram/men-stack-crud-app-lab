@@ -7,11 +7,16 @@ const path = require('path')
 
 const app = express();
 
+const methodOverride = require ("method-override")
+const morgan = require("morgan")
+
 // CONTROLLER FOR FOOD ROUTES
 const foodController = require('./controllers/foodController');
 
 // MIDDLEWARE
 app.use(express.urlencoded({ extended: false }));
+app.use(methodOverride('_method'))
+app.use(morgan('dev'))
 
 // STATIC FILES FOR CSS/IMG
 app.use(express.static(path.join(__dirname, 'public')));
